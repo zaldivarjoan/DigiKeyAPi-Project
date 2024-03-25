@@ -1,0 +1,41 @@
+{
+  "name": "midterm",
+  "version": "1.0.0",
+  "description": "This is digikey API Midterm",
+  "main": "index.js",
+  "type": "module",
+  "contributors": [
+    {
+      "name": "Joan Zaldivar"
+    },
+    {
+      "name": "Kevin Maravillas"
+    },
+    {
+      "name": "Leo Gallardo"
+    },
+    {
+      "name": "Dat Nguyen"
+    },
+    {
+      "name": "Josue "
+    }
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaldivarjoan/4220Midterm.git"
+  },
+  "author": "Luis Perez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaldivarjoan/4220Midterm/issues"
+  },
+  "homepage": "https://github.com/zaldivarjoan/4220Midterm#readme",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "qs": "^6.12.0"
+  }
+}
