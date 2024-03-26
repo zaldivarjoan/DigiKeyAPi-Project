@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs'; 
+import module from 'module';
 
 const clientID = 's1fMOBco1GqCa43KDRrgA9O4QgI8jNCU';
 const clientSecret = 'c5fl3yDso9lW8rzm';
@@ -47,7 +48,7 @@ const searchByKeyword = async (keyword) =>{
         const auth = `Bearer ${tokens}`;
         const data = JSON.stringify({
             'Keywords': keyword,
-            'Limit': 10,
+            'Limit': 50,
             'Offset': 0
         });
 
@@ -73,7 +74,7 @@ const searchByKeyword = async (keyword) =>{
     }
 }
 
-const getProductDetailsByNumber = async (productNumber) => {
+const getDetailsById = async (productNumber) => {
   try {
     const accessToken = await getAccessToken();
     const response = await axios.get(`https://sandbox-api.digikey.com/products/v4/search/${productNumber}/productdetails`, {
@@ -86,7 +87,6 @@ const getProductDetailsByNumber = async (productNumber) => {
         'X-DIGIKEY-Locale-Currency': 'USD'
       }
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(`Error in getProductDetailsByNumber: ${error}`);
@@ -94,5 +94,12 @@ const getProductDetailsByNumber = async (productNumber) => {
   }
 };
 
+export default searchByKeyword;
+
+//module.exports = { getDetailsById, searchByKeyword };
+
+
+
+
 //searchByKeyword('IVIEW 14" Laptop');
-getProductDetailsByNumber('IVIEW 1430NB');
+//getDetailsById('IVIEW 1430NB');
