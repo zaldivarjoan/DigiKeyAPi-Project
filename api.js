@@ -72,3 +72,27 @@ const searchByKeyword = async (keyword) =>{
         console.error('Error when searching by keyword', error);
     }
 }
+
+const getProductDetailsByNumber = async (productNumber) => {
+  try {
+    const accessToken = await getAccessToken();
+    const response = await axios.get(`https://sandbox-api.digikey.com/products/v4/search/${productNumber}/productdetails`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        'X-DIGIKEY-Client-Id': clientID,
+        'X-DIGIKEY-Locale-Site': 'US',
+        'X-DIGIKEY-Locale-Language': 'en',
+        'X-DIGIKEY-Locale-Currency': 'USD'
+      }
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(`Error in getProductDetailsByNumber: ${error}`);
+    return null;
+  }
+};
+
+//searchByKeyword('IVIEW 14" Laptop');
+getProductDetailsByNumber('IVIEW 1430NB');
