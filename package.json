@@ -2,7 +2,7 @@
   "name": "midterm",
   "version": "1.0.0",
   "description": "This is digikey API Midterm",
-  "main": "index.js",
+  "main": "api.js",
   "type": "module",
   "contributors": [
     {
