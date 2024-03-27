@@ -64,8 +64,6 @@ const searchByKeyword = async (keyword) =>{
                 }
             }
         );
-
-        console.log(response.data);
         return response.data;
     }
     catch(error){
@@ -86,6 +84,11 @@ export const getDetailsById = async (productNumber) => {
         'X-DIGIKEY-Locale-Currency': 'USD'
       }
     });
+    // console.log(`Item :  ${response.data.Product.Description.ProductDescription}`);
+    // console.log(`Manufacturer ID :  ${response.data.Product.Manufacturer.Id}`);
+    // console.log(`Manufacturer Product Number :  ${response.data.Product.ManufacturerProductNumber}`);
+    // console.log(`Price :  ${response.data.Product.UnitPrice}`);
+    // console.log(`QuantityAvailable :  ${response.data.Product.QuantityAvailable}`);
     return response.data;
   } catch (error) {
     console.error(`Error in getProductDetailsByNumber: ${error}`);
@@ -95,10 +98,8 @@ export const getDetailsById = async (productNumber) => {
 
 export default searchByKeyword;
 
-//module.exports = { getDetailsById, searchByKeyword };
 
 
 
-
-searchByKeyword('IVIEW 14" Laptop');
+//searchByKeyword('IVIEW 14" Laptop');
 //getDetailsById('IVIEW 1430NB');
