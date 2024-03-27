@@ -1,9 +1,9 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import searchByKeyword from './api.js';
+import { handleKeywordSearch, displaySearchHistory } from './app.js';
 
 yargs(hideBin(process.argv))
-    .usage('CLI tool for interacting with the selected API')
+    .usage('Tool for interacting with the selected API')
     .command(
         // command name with argument
         'search <keyword>',
@@ -21,18 +21,13 @@ yargs(hideBin(process.argv))
         },
         // handler function
         async (args) => {
-          try {
-            const { keyword, cache } = args;
-            // Perform search based on the keyword
-            const searchResults = await searchByKeyword(keyword);
-            console.log('Search Results:', searchResults);
-            // Handle cache option if needed
-            if (cache) {
-                // Implement caching logic here if required
+            try
+            {
+                const { keyword, cache } = args;
+                handleKeywordSearch(keyword,cache);
+            }catch (error) {
+                console.error('Error during search:', error.message);
             }
-        } catch (error) {
-            console.error('Error during search:', error.message);
-        }
         }
     )
     .command(
@@ -41,7 +36,6 @@ yargs(hideBin(process.argv))
         () => {},
         async () => {
           try {
-            // Implement history retrieval logic here
             await displaySearchHistory();
         } catch (error) {
             console.error('Error getting search history:', error.message);

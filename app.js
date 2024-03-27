@@ -4,7 +4,7 @@ import { create, find } from './db.js';
 import inquirer from 'inquirer';
 
 //Function to handle searching by keyword
-const handleKeywordSearch = async (keyword, useCache = false) => {
+export const handleKeywordSearch = async (keyword, useCache = false) => {
   try {
     // Perform search based on the keyword
     const searchResults = await searchByKeyword(keyword);
@@ -67,14 +67,31 @@ const saveToSearchCache = async (selectItem, itemDetail) => {
 
 const saveToSearchHistory = async (keyword, searchResults) => {
 
+  let idList = [];
   for(let i = 0; i < searchResults.Products.length; i++){
-    try {
-      // Create a new entry in the search history with the keyword and result count
-      await create('./search_history', { search: keyword, id : searchResults.Products[i].ManufacturerProductNumber });
-    } catch (error) {
-      console.error('Error saving search history:', error.message);
-    }
+    idList[i] = searchResults.Products[i].ManufacturerProductNumber;
 }
+  
+  const entry = {
+    search: keyword,
+    id: JSON.stringify(idList)
+};
+
+try {
+  // Create a new entry in the search history with the keyword and result count
+  await create('./search_history', entry);
+} catch (error) {
+  console.error('Error saving search history:', error.message);
+}
+
+//   for(let i = 0; i < searchResults.Products.length; i++){
+//     try {
+//       // Create a new entry in the search history with the keyword and result count
+//       await create('./search_history', { search: keyword, id : searchResults.Products[i].ManufacturerProductNumber });
+//     } catch (error) {
+//       console.error('Error saving search history:', error.message);
+//     }
+// }
 }
 // Placeholder functions for retrieving cached item details and prompting user to select an item
 const getCachedItemDetails = async (itemId) => {
@@ -90,8 +107,7 @@ const getCachedItemDetails = async (itemId) => {
 
 const promptUserToSelectItem = async (searchResults) => {
   const choices = searchResults.Products.map((result) => ({
-    name: `${result.ManufacturerProductNumber}` // Assuming each result has a name and an id
-    //value: result.Products[0].ManufacturerProductNumber // Assuming the id uniquely identifies each item
+    name: `${result.ManufacturerProductNumber}`
   }));
 
   const questions = [
@@ -107,6 +123,28 @@ const promptUserToSelectItem = async (searchResults) => {
   return answers.selectedItemId;
 };
 
-handleKeywordSearch('IVIEW 14" Laptop',true);
+export const displaySearchHistory = async () => {
+  try {
+    const searchHistory = await find('./search_history');
+    if (searchHistory.length === 0) {
+      console.log('No search history available.');
+    } else {
+      console.log('Previous searches history:');
+      searchHistory.forEach((entry, index) => {
+        console.log(`Search ${index + 1}:`);
+        console.log(`  Keyword: ${entry.search}`);
+      });
+    }
+  } catch (error) {
+    console.error('Error getting search history:', error.message);
+  }
+  // try {
+  //   const itemDetail = await find('./search_cache', itemId);
+  //   return itemDetail;
+  // } catch (error) {
+  //   console.error('Error saving search history:', error.message);
+  // }
+};
+
 
 
