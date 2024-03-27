@@ -1,5 +1,7 @@
 import { program } from 'commander';
 import searchByKeyword from './api.js';
+import fs from "fs";
+import { readFile } from 'fs';
 program
   .description('CLI tool for interacting with the selected API');
 
@@ -27,8 +29,10 @@ program
   .description('Get history on previous searches')
   .action(() => {
     try {
+
+      const searchHistory = fs.readFileSync('.\mock_database\search_history.json')
       // Implement history retrieval logic here
-      console.log('Previous searches history:');
+      console.log('Previous searches history:', searchHistory);
       // Display history
     } catch (error) {
       console.error('Error getting search history:', error.message);
