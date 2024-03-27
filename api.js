@@ -86,9 +86,3 @@ export const getDetailsById = async (productNumber) => {
 };
 
 export default searchByKeyword;
-
-
-
-
-//searchByKeyword('IVIEW 14" Laptop');
-//getDetailsById('IVIEW 1430NB');
