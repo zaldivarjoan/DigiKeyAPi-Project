@@ -13,13 +13,14 @@ const handleKeywordSearch = async (keyword, cacheOption = false) => {
     // Save data in the mock database (search_history.json)
     fs.writeFile(".\mock_database\search_history.json",JSON.stringify(searchResults));
     //await saveSearchHistory(keyword, searchResults.length);
-
+    
     // Prompt the user to select an item from the search results (implement your logic here)
-
+    
     // Retrieve detailed data for the selected item based on the cache option
     //const detailedData = await getDetailedData(searchResults[0], cacheOption); // Example: retrieving details for the first item
 
     // Display the detailed data to the user in a user-friendly format
+   
     //console.log('Detailed data:', detailedData);
   } catch (error) {
     console.error('Error handling keyword search:', error);
@@ -56,20 +57,23 @@ const handleKeywordSearch = async (keyword, cacheOption = false) => {
 // };
 
 // // Function to handle logic for displaying the search history
-// const handleDisplaySearchHistory = async () => {
-//   try {
+const handleDisplaySearchHistory = async () => {
+   try {
 //     // Retrieve the search history from the mock database
-//     const searchHistory = await getSearchHistory();
+     const searchHistory = await getSearchHistory('.\mock_database\search_history.json');
 
 //     // Display the search history to the user in a user-friendly format
-//     console.log('Search history:');
-//     searchHistory.forEach((entry, index) => {
-//       console.log(`${index + 1}. Keyword: ${entry.keyword}, Result Count: ${entry.resultCount}`);
-//     });
-//   } catch (error) {
-//     console.error('Error displaying search history:', error);
-//   }
-// };
+     console.log('Search history:', searchHistory);
+
+     searchHistory.forEach((entry, index) => {
+
+       console.log(`${index + 1}. Keyword: ${entry.keyword}, Result Count: ${entry.resultCount}`);
+     });
+
+   } catch (error) {
+     console.error('Error displaying search history:', error);
+   }
+};
 
 handleKeywordSearch('IVIEW 14" Laptop');
 
