@@ -1,6 +1,5 @@
 import axios from 'axios';
 import qs from 'qs'; 
-import module from 'module';
 
 const clientID = 's1fMOBco1GqCa43KDRrgA9O4QgI8jNCU';
 const clientSecret = 'c5fl3yDso9lW8rzm';
@@ -74,7 +73,7 @@ const searchByKeyword = async (keyword) =>{
     }
 }
 
-const getDetailsById = async (productNumber) => {
+export const getDetailsById = async (productNumber) => {
   try {
     const accessToken = await getAccessToken();
     const response = await axios.get(`https://sandbox-api.digikey.com/products/v4/search/${productNumber}/productdetails`, {

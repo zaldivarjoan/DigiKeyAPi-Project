@@ -2,7 +2,7 @@
   "name": "midterm",
   "version": "1.0.0",
   "description": "This is digikey API Midterm",
-  "main": "cli.js",
+  "main": "app.js",
   "type": "module",
   "contributors": [
     {
@@ -40,6 +40,7 @@
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
     "qs": "^6.12.0",
-    "url": "^0.11.3"
+    "url": "^0.11.3",
+    "yargs": "^17.7.2"
   }
 }
