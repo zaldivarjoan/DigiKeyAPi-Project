@@ -35,12 +35,6 @@ const getAccessToken = async () => {
   }
 };
 
-/** 
- * This function will take a user input string that is only up to 250 characters
- * It will then get authorization tokens to access the API. Once the it obtained the tokens
- * it will then make a request call to the POST search by keyword API. Finally returning products 
- * that are similar to the key words provided.
- */
 const searchByKeyword = async (keyword) =>{
     try{
         const tokens = await getAccessToken();

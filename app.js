@@ -83,15 +83,6 @@ try {
 } catch (error) {
   console.error('Error saving search history:', error.message);
 }
-
-//   for(let i = 0; i < searchResults.Products.length; i++){
-//     try {
-//       // Create a new entry in the search history with the keyword and result count
-//       await create('./search_history', { search: keyword, id : searchResults.Products[i].ManufacturerProductNumber });
-//     } catch (error) {
-//       console.error('Error saving search history:', error.message);
-//     }
-// }
 }
 // Placeholder functions for retrieving cached item details and prompting user to select an item
 const getCachedItemDetails = async (itemId) => {
@@ -138,12 +129,6 @@ export const displaySearchHistory = async () => {
   } catch (error) {
     console.error('Error getting search history:', error.message);
   }
-  // try {
-  //   const itemDetail = await find('./search_cache', itemId);
-  //   return itemDetail;
-  // } catch (error) {
-  //   console.error('Error saving search history:', error.message);
-  // }
 };
 
 
