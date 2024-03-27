@@ -1,6 +1,7 @@
 import searchByKeyword from './api.js';
+import getDetailsById from './api.js';
 import { create, find } from './db.js';
-import fs from 'fs';
+import inquirer from 'inquirer';
 
 //Function to handle searching by keyword
 const handleKeywordSearch = async (keyword, useCache = false) => {
@@ -9,29 +10,27 @@ const handleKeywordSearch = async (keyword, useCache = false) => {
     const searchResults = await searchByKeyword(keyword);
     // Save search results to search_history.json
     await saveToSearchHistory(keyword, searchResults);
-
-
-    // // Prompt the user to select an item from the search results
-    // const selectedItemId = await promptUserToSelectItem(searchResults);
-    // // Retrieve detailed data for the selected item based on the cache option
-    // let itemDetails;
-    // if (!useCache) {
-    //   // If cache option is false, get detailed data from the API
-    //   itemDetails = await getDetailsById(selectedItemId);
-    //   // Save entry in search_cache.json
-    //   await saveToSearchCache(selectedItemId, itemDetails);
-    // } else {
-    //   // If cache option is true, attempt to find the selected item in search_cache.json
-    //   itemDetails = await getCachedItemDetails(selectedItemId);
-    //   if (!itemDetails) {
-    //     // If not found in the search_cache.json, get detailed data from the API
-    //     itemDetails = await getDetailsById(selectedItemId);
-    //     // Save entry in search_cache.json
-    //     await saveToSearchCache(selectedItemId, itemDetails);
-    //   }
-    // }
-    // // Display detailed data to the user
-    // displayItemDetails(itemDetails);
+    // Prompt the user to select an item from the search results
+    const selectedItemId = await promptUserToSelectItem(searchResults);
+    // Retrieve detailed data for the selected item based on the cache option
+    let itemDetails;
+    if (!useCache) {
+      // If cache option is false, get detailed data from the API
+      itemDetails = await getDetailsById(selectedItemId);
+      // Save entry in search_cache.json
+      await saveToSearchCache(selectedItemId, itemDetails);
+    } else {
+      // If cache option is true, attempt to find the selected item in search_cache.json
+      itemDetails = await getCachedItemDetails(selectedItemId);
+      if (!itemDetails) {
+        // If not found in the search_cache.json, get detailed data from the API
+        itemDetails = await getDetailsById(selectedItemId);
+        // Save entry in search_cache.json
+        await saveToSearchCache(selectedItemId, itemDetails);
+      }
+    }
+    // Display detailed data to the user
+    displayItemDetails(itemDetails);
   } catch (error) {
     console.error('Error during keyword search:', error.message);
   }
@@ -95,24 +94,41 @@ const displaySearchHistory = async () => {
 };
 
 // Function to save search history
+const saveToSearchCache = async (selectItem, itemDetail) => {
+  try {
+    await create('./search_cache', { Item: selectItem, Detail : itemDetail  });
+  } catch (error) {
+    console.error('Error saving search history:', error.message);
+  }
+}
+
 const saveToSearchHistory = async (keyword, searchResults) => {
+
+  for(let i = 0; i < searchResults.Products.length; i++){
+    try {
+      // Create a new entry in the search history with the keyword and result count
+      await create('./search_history', { search: keyword, id : searchResults.Products[i].ManufacturerProductNumber });
+    } catch (error) {
+      console.error('Error saving search history:', error.message);
+    }
+}
+}
+// Placeholder functions for retrieving cached item details and prompting user to select an item
+const getCachedItemDetails = async (itemId) => {
+  // Implement logic to retrieve cached item details by ID
   try {
     // Create a new entry in the search history with the keyword and result count
-    await create('./search_history', { search: keyword, resultCount: searchResults.Products.length });
+    const itemDetail = await find('./search_cache', itemId);
+    return itemDetail;
   } catch (error) {
     console.error('Error saving search history:', error.message);
   }
 };
 
-// Placeholder functions for retrieving cached item details and prompting user to select an item
-const getCachedItemDetails = async (itemId) => {
-  // Implement logic to retrieve cached item details by ID
-};
-
 const promptUserToSelectItem = async (searchResults) => {
-  const choices = searchResults.map((result) => ({
-    name: `${result.name} (${result.id})`, // Assuming each result has a name and an id
-    value: result.id // Assuming the id uniquely identifies each item
+  const choices = searchResults.Products.map((result) => ({
+    name: `${result.ManufacturerProductNumber}` // Assuming each result has a name and an id
+    //value: result.Products[0].ManufacturerProductNumber // Assuming the id uniquely identifies each item
   }));
 
   const questions = [
@@ -130,6 +146,6 @@ const promptUserToSelectItem = async (searchResults) => {
 
 //export { searchByKeywordApp, displaySearchHistory };
 
-handleKeywordSearch('History');
+handleKeywordSearch('IVIEW 14" Laptop');
 
 
