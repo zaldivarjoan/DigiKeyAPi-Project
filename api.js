@@ -58,6 +58,7 @@ const searchByKeyword = async (keyword) =>{
                 }
             }
         );
+        
         return response.data;
     }
     catch(error){

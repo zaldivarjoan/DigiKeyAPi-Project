@@ -8,6 +8,7 @@ export const handleKeywordSearch = async (keyword, useCache = false) => {
   try {
     // Perform search based on the keyword
     const searchResults = await searchByKeyword(keyword);
+
     // Save search results to search_history.json
     await saveToSearchHistory(keyword, searchResults);
     // Prompt the user to select an item from the search results
