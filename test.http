@@ -1,1 +1,7 @@
 get http://localhost:8080/search?searchTerm=laptop
+
+//get http://localhost:8080/SB-UNV-SL-15.6/details
+
+//get http://localhost:8080/history
+
+//get http://localhost:8080/history?searchTerm=laptop
