@@ -1,6 +1,6 @@
-get http://localhost:8080/search?searchTerm=laptop
+//get http://localhost:8080/search?searchTerm=laptop
 
-//get http://localhost:8080/SB-UNV-SL-15.6/details
+//get http://localhost:8080/search/TUSB217AIRWBR/details
 
 //get http://localhost:8080/history
 
