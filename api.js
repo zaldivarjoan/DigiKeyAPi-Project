@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs'; 
 
-const clientID = 's1fMOBco1GqCa43KDRrgA9O4QgI8jNCU';
-const clientSecret = 'c5fl3yDso9lW8rzm';
+const clientID = 'hgj0hAId8vWwUAzceS6kEqjGzXZ0KRGb';
+const clientSecret = '7ejkmy3GUiXGmtAU';
 
 //URL callback: https://zaldivarjoan.github.io/4220Midterm
 
@@ -41,7 +41,7 @@ const searchByKeyword = async (keyword) =>{
         const auth = `Bearer ${tokens}`;
         const data = JSON.stringify({
             'Keywords': keyword,
-            'Limit': 50,
+            'Limit': 10,
             'Offset': 0
         });
 

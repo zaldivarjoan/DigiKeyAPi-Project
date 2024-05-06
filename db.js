@@ -84,8 +84,8 @@ class MongoDB {
 
     async findID(collectionName, _id) {
         try {
-          var id = new ObjectId (_id.insertedId.toString());
-          const result = await this.db.collection(collectionName).findOne({ id: _id});
+          const projection = { _id: 0 };
+          const result = await this.db.collection(collectionName).findOne({_id}, { projection });
           return result;
         } catch (err) {
           console.error("Error finding document:", err);
@@ -93,24 +93,34 @@ class MongoDB {
       }
     async findData(collectionName, data) {
         try {
-            const result = await this.db.collection(collectionName).findOne({data});
+            const projection = { _id: 0 };
+            const result = await this.db.collection(collectionName).findOne({searchTerm: data}, { projection });
             return result;
         } catch (err) {
             console.error("Error finding document:", err);
         }
     }  
-    async returnAllData(collectionName,) {
+    async returnAllData(collectionName) {
         try {
-            const result = await this.db.collection.find({}).toArray();
-            return result;
+            const projection = { _id: 0 };
+            const collection = this.db.collection(collectionName);
+            return await collection
+                  .find({},{ projection })
+                  .limit(100)
+                  .sort({ _id: -1 })
+                  .toArray();
         } catch (err) {
             console.error("Error finding document:", err);
         }
+
     }    
     async update(collectionName, previous, update) {
         try {
-        //var id = new ObjectId (_id.insertedId.toString());
-        const result = await this.db.collection(collectionName).updateOne({ previous,update});
+          console.log({previous})
+          console.log({update})
+
+        const result = await this.db.collection(collectionName).replaceOne({ previous,update});
+        return result;
         } catch (err) {
         console.error("Error finding document:", err);
         }

@@ -1,20 +1,17 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-import MongoDB from '../router/db.js';
+import db from '../db.js';
 
 
 // Endpoint GET /history
 router.get('/', async (req, res) => {
   try {
-    const db = MongoDB;
-    await db.connect();
-
     let history;
-    const searchTerm = req.query;
+    const {searchTerm} = req.query;
 
     if(!searchTerm)
     {
-        history = await db.returnAllData();
+        history = await db.returnAllData("search_history");
     }
     else
     {
@@ -28,4 +25,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

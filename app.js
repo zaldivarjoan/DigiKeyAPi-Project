@@ -1,6 +1,5 @@
 import searchByKeyword from './api.js';
 import {getDetailsById} from './api.js';
-import { create, find } from './db.js';
 import inquirer from 'inquirer';
 
 //Function to handle searching by keyword
@@ -8,6 +7,8 @@ export const handleKeywordSearch = async (keyword, useCache = false) => {
   try {
     // Perform search based on the keyword
     const searchResults = await searchByKeyword(keyword);
+
+    console.log(searchResults);
 
     // Save search results to search_history.json
     await saveToSearchHistory(keyword, searchResults);
