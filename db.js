@@ -85,7 +85,7 @@ class MongoDB {
     async findID(collectionName, _id) {
         try {
           const projection = { _id: 0 };
-          const result = await this.db.collection(collectionName).findOne({_id}, { projection });
+          const result = await this.db.collection(collectionName).findOne({_id}, {projection});
           return result;
         } catch (err) {
           console.error("Error finding document:", err);
@@ -94,7 +94,7 @@ class MongoDB {
     async findData(collectionName, data) {
         try {
             const projection = { _id: 0 };
-            const result = await this.db.collection(collectionName).findOne({searchTerm: data}, { projection });
+            const result = await this.db.collection(collectionName).findOne({searchTerm: data}, {projection});
             return result;
         } catch (err) {
             console.error("Error finding document:", err);
@@ -105,7 +105,7 @@ class MongoDB {
             const projection = { _id: 0 };
             const collection = this.db.collection(collectionName);
             return await collection
-                  .find({},{ projection })
+                  .find({}, {projection})
                   .limit(100)
                   .sort({ _id: -1 })
                   .toArray();
@@ -116,11 +116,12 @@ class MongoDB {
     }    
     async update(collectionName, previous, update) {
         try {
-          console.log({previous})
-          console.log({update})
 
-        const result = await this.db.collection(collectionName).replaceOne({ previous,update});
-        return result;
+          const filter = { previous };
+          const replacement = { $set: update };
+
+        await this.db.collection(collectionName).updateOne (filter, replacement);
+        //return result;
         } catch (err) {
         console.error("Error finding document:", err);
         }

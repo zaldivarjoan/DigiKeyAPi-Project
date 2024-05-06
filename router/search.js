@@ -8,6 +8,8 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const {searchTerm} = req.query;
+
+    //console.log(searchTerm);
     // // Display all the search result //
     const searchResults = await searchByKeyword(searchTerm);
 
@@ -26,6 +28,9 @@ router.get('/', async (req, res) => {
         results[i] = {id: idList[i].Product.ManufacturerProductNumber, displayText: idList[i].Product.Description.ProductDescription }  
     }
 
+    console.log(idList.length);
+
+
     try {
       // const db = MongoDB;
       // await db.connect();
@@ -34,7 +39,12 @@ router.get('/', async (req, res) => {
       
       if(!collection)
       {
-        db.create("search_history",  {searchTerm, searchCount: results.length, lastSearched: new Date() });
+        let data = {
+          searchTerm: searchTerm,
+          searchCount: results.length,
+          lastSearched: new Date()
+        };
+        db.create("search_history",  data);
       }
       else
       {
@@ -42,7 +52,12 @@ router.get('/', async (req, res) => {
         //console.log(check);
             if(check)
             {
-                db.update("search_history", check, {searchTerm: searchTerm, searchCount: results.length, lastSearched: new Date() });
+              let data = {
+                searchTerm: searchTerm,
+                searchCount: results.length,
+                lastSearched: new Date()
+              };
+                db.update("search_history", check, data);
             }
             else
             {
