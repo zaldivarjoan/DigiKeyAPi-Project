@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import db from '../db.js';
+import db from '../services/db.js';
 
 
 // Endpoint GET /history

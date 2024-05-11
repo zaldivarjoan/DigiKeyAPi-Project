@@ -1,7 +1,7 @@
 import express from 'express';
-import searchByKeyword from '../api.js';
-import {getDetailsById} from '../api.js';
-import db from '../db.js';
+import searchByKeyword from '../services/api.js';
+import {getDetailsById} from '../services/api.js';
+import db from '../services/db.js';
 
 const router = express.Router();
 // Endpoint GET /search
@@ -78,7 +78,7 @@ router.get('/', async (req, res) => {
 });
 
 
-//GET /search/:id/details
+//endpoint /search/:id/details
 router.get('/:id/details', async (req, res) => {
   const { id } = req.params;
   const { cache = true } = req.query;
@@ -115,7 +115,7 @@ router.get('/:id/details', async (req, res) => {
       db.create("search_cache", detailedData);
 
     }
-
+    // Returns requested information
     res.json({ detailedData });
   } catch (error) {
     console.error('Error retrieving detailed data:', error);

@@ -1,8 +1,8 @@
 import express from 'express';
-import mongo from './db.js';
+import mongo from './services/db.js';
 
-import search from './router/search.js';
-import history from './router/history.js';
+import search from './routes/search.js';
+import history from './routes/history.js';
 
 const PORT = 8080;
 
