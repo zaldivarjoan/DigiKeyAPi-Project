@@ -1,4 +1,4 @@
-# 4220Midterm
+# DigiKey API
 <!-- Website URL: https://zaldivarjoan.github.io/4220Midterm/ -->
 To run the api, here are the commands you can  use in your terminal:
 
